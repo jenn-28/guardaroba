@@ -1,0 +1,45 @@
+/* Reseteo básico seguro */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f7f7f7;
+    font-family: sans-serif;
+}
+
+#root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    width: 90%;
+    background-color: #e3d9c5;
+    border-radius: 28px;
+    margin: 2.5% auto; /* Centrado horizontal automático */
+    border: 3px solid #000; /* Borde visible negro */
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    background-color: #e3d9c5;
+}
+
+.logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#logo {
+    background-color: #000;
+    width: 50px;
+    height: 50px; /* Añadido para que se vea el span como círculo */
+    display: inline-block;
+    border-radius: 50%;
+}
