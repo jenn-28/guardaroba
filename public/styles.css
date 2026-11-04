@@ -43,3 +43,9 @@ header {
     display: inline-block;
     border-radius: 50%;
 }
+
+#buttons_login_register{
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+}
