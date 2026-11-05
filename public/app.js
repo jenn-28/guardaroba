@@ -72,4 +72,54 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    //Envio del formulario de Registro//
+    if (formRegister) {
+        formRegister.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const new_email = document.getElementById('new_email').value;
+            const new_password = document.getElementById('new_password').value;
+
+            try{
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, new_email, new_password })
+                });
+                const data = await response.json();
+                alert(data.message);
+                if (data.success) formRegister.reset(); // Limpiar el formulario si el registro fue exitoso{
+            }catch (error) {
+                console.error('Error al registrar usuario:', error);
+                alert('Ocurrió un error al registrar. Por favor, inténtalo de nuevo.');
+            }
+        });
+    }
+
+
+    //Envío del Formulario de Login
+    if (formLogin) {
+        formLogin.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await response.json();
+                alert(data.message);
+                if (data.success){
+                    window.location.href = '/dashboard.html'; // Redirigir a la página de dashboard si el login fue exitoso
+                } // Limpiar el formulario si el login fue exitoso
+            } catch (error) {
+                console.error('Error al iniciar sesión:', error);
+                alert('Ocurrió un error al iniciar sesión. Por favor, inténtalo de nuevo.');
+            }
+        });
+    }
+
 });
