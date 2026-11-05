@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Armario — Guardaroba</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Importar fuentes Y2K -->
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-body">
+    <div id="app-container">
+        <!-- Barra de Navegación Superior -->
+        <header class="dash-header">
+            <div class="logo">
+                <div class="logo-icon"><img class="logo-icon" src="img/logo_grb.png" alt="logo Guardaroba"></div>
+                <span class="logo-title">Guardaroba</span>
+            </div>
+            <nav class="dash-nav">
+                <a href="#" class="nav-link active">Mi Armario</a>
+                <a href="#" class="nav-link">Combinaciones</a>
+                <a href="#" class="nav-link">Favoritos</a>
+            </nav>
+            <div class="user-menu">
+                <span id="welcome-user">Hola, ¡Bienvenida!</span>
+                <button id="logout-btn" class="logout-btn">Cerrar sesión</button>
+            </div>
+        </header>
+
+        <!-- Contenido Principal del Armario Digital -->
+        <main class="dash-main">
+            <section class="welcome-banner">
+                <p class="subtitle">AUTODRESS SYSTEM</p>
+                <h1>Tu armario digital.</h1>
+                <p class="description">Organiza tus prendas, explora tus looks y planea tus outfits al estilo de los 2000.</p>
+            </section>
+
+            <!-- Categorías o Prendas Rápidas -->
+            <div class="wardrobe-grid">
+                <div class="category-card">
+                    <h3>Superiores</h3>
+                    <p>Blusas, suéteres y tops</p>
+                </div>
+                <div class="category-card">
+                    <h3>Inferiores</h3>
+                    <p>Faldas, pantalones y shorts</p>
+                </div>
+                <div class="category-card">
+                    <h3>Calzado</h3>
+                    <p>Botas, tacones y tenis</p>
+                </div>
+                <div class="category-card">
+                    <h3>Accesorios</h3>
+                    <p>Bolsos, lentes y joyería</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="dash-footer">
+            <p>&copy; 2026 Guardaroba. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <!-- Script para proteger la ruta o manejar el cierre de sesión -->
+    <script>
+        // Lógica sencilla de cierre de sesión
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            // Aquí puedes limpiar tokens o datos de sesión si usas localStorage
+            localStorage.removeItem('token');
+            window.location.href = '/index.html'; // Redirige al login
+        });
+    </script>
+</body>
+</html>

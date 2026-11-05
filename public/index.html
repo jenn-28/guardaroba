@@ -1,66 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="img/logo_grb.png" type="image/png">
     <title>Guardaroba</title>
 </head>
 <body>
     <div id="root">
-        <section>
-            <header>
-                <!-- Cambiado de name="logo" a class="logo" -->
+        <!-- Columna Izquierda: Formulario e Información -->
+        <main class="auth-container">
+            <header class="header">
                 <div class="logo">
-                    <span id="logo"></span>    
-                    <span id="title">Guardaroba</span>
+                    <div class="logo-icon"><img class="logo-icon" src="img/logo_grb.png" alt="logo Guardaroba"></div>
+                    <span class="logo-title">Guardaroba</span>
+                </div>
+                <div class="top-auth-switch">
+                    <span id="text-switch">¿Ya tienes cuenta?</span>
+                    <button class="nav-switch-btn" data-target="login">Inicia sesión</button>
                 </div>
             </header>
-            <!-- Corregidos los espacios en los id y cambiados a clases o separados -->
-            <div id="form_login" class="flex">
-                <div id="content" class="full">
-                    <div id="intro">
-                        <p>Tu armario, Tu orden</p>
-                        <h1>Crea tu Guardarropa</h1>
-                        <p>Bienvenido a Guardaroba, tu aplicación de gestión de ropa. Inicia sesión o regístrate para comenzar a organizar tu guardarropa.</p>
-                    </div> 
-                    <div id="buttons_login_register" class="flex">
-                        <button id="login">Login</button>
-                        <button id="register">Register</button>
-                    </div>
-                    <!-- Formulario de inicio de sesión -->
-                    <form id="iniciar_sesion">
-                        <div class="form-group">
-                            <label for="username">Nombre:</label>
-                            <input type="text" id="username" name="username" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Correo electrónico:</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Contraseña:</label>
-                            <input type="password" id="password" name="password" required>
-                        </div>
-                    </form>
-                    <!-- Formulario de registro -->
-                    <form id="registrarse">
-                        <div class="form-group">
-                            <label for="new_email">Correo electrónico:</label>
-                            <input type="email" id="new_email" name="new_email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="new_password">Contraseña:</label>
-                            <input type="password" id="new_password" name="new_password" required>
-                        </div>
-                    </form>
-                    <p></p>
+
+            <div class="content-body">
+                <!-- Textos Intro -->
+                <div class="intro-register active-intro">
+                    <p class="subtitle">TU ARMARIO, EN ORDEN</p>
+                    <h1>Crea tu guardarropa.</h1>
+                    <p class="description">Guarda tus prendas, descubre nuevas combinaciones y decide qué ponerte sin complicaciones.</p>
                 </div>
+
+                <div class="intro-login">
+                    <p class="subtitle">TU ARMARIO, EN ORDEN</p>
+                    <h1>Qué bueno verte.</h1>
+                    <p class="description">Entra para seguir organizando tus prendas y creando nuevos looks.</p>
+                </div>
+
+                <!-- Selector estilo Pastilla (Pill) -->
+                <div class="tab-container">
+                    <button class="tab-btn active" data-target="register">Crear cuenta</button>
+                    <button class="tab-btn" data-target="login">Iniciar sesión</button>
+                </div>
+
+                <!-- Formulario Registro -->
+                <form id="registrarse" class="auth-form active">
+                    <div class="form-group">
+                        <label for="username">Nombre</label>
+                        <input type="text" id="username" placeholder="Ingresa tu nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new_email">Correo electrónico</label>
+                        <input type="email" id="new_email" placeholder="tu@correo.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new_password">Contraseña</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="new_password" placeholder="Ingresa una contraseña de al menos 6 caracteres" required>
+                            <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar u ocultar contraseña">
+                                <!-- Ícono Ojo Abierto (Visible por defecto) -->
+                                <svg class="eye-icon eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                                <!-- Ícono Ojo Cerrado (Oculto por defecto) -->
+                                <svg class="eye-icon eye-closed" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!---div class="terms-group">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">Acepto los <a href="#">términos</a> y la <a href="#">política de privacidad</a>.</label>
+                    </div--->
+
+                    <button type="submit" class="submit-btn">Crear mi guardarropa</button>
+
+                    <div class="divider"><span>o continúa con</span></div>
+                    
+                    <button type="button" class="btn-google">
+                        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                        Google
+                    </button>
+                </form>
+
+                <!-- Formulario Iniciar Sesión -->
+                <form id="iniciar_sesion" class="auth-form">
+                    <div class="form-group">
+                        <label for="email">Correo electrónico</label>
+                        <input type="email" id="email" placeholder="tu@correo.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" id="password" placeholder="Ingresa tu contraseña" required>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Ingresar</button>
+
+                    <div class="divider"><span>o continúa con</span></div>
+
+                    <button type="button" class="btn-google">
+                        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                        Google
+                    </button>
+                </form>
             </div>
-            <footer>
-                <p>&copy; 2026 Guardaroba.</p>
+
+            <footer class="footer">
+                <span>&copy; 2026 Guardaroba</span>
             </footer>
-        </section>
+        </main>
+
+        <!-- Columna Derecha: Imagen destacada (se oculta en dispositivos móviles) -->
+        <aside class="hero-image">
+            <!---div class="testimonial-card">
+                <h4>Crea y guarda todos los estilos que se te ocurran</h4>
+            </div--->
+        </aside>
     </div>
     <script src="app.js"></script>
 </body>
