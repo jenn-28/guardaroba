@@ -9,68 +9,221 @@
     <!-- Importar fuentes Y2K -->
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="dashboard-body">
-    <div id="app-container">
-        <!-- Barra de Navegación Superior -->
-        <header class="dash-header">
-            <div class="logo">
-                <div class="logo-icon"><img class="logo-icon" src="img/logo_grb.png" alt="logo Guardaroba"></div>
-                <span class="logo-title">Guardaroba</span>
-            </div>
-            <nav class="dash-nav">
-                <a href="#" class="nav-link active">Mi Armario</a>
-                <a href="#" class="nav-link">Combinaciones</a>
-                <a href="#" class="nav-link">Favoritos</a>
-            </nav>
-            <div class="user-menu">
-                <span id="welcome-user">Hola, ¡Bienvenida!</span>
-                <button id="logout-btn" class="logout-btn">Cerrar sesión</button>
-            </div>
-        </header>
+<body class="retro-os-body">
 
-        <!-- Contenido Principal del Armario Digital -->
-        <main class="dash-main">
-            <section class="welcome-banner">
-                <p class="subtitle">AUTODRESS SYSTEM</p>
-                <h1>Tu armario digital.</h1>
-                <p class="description">Organiza tus prendas, explora tus looks y planea tus outfits a tu estilo.</p>
-            </section>
-
-            <!-- Categorías o Prendas Rápidas -->
-            <div class="wardrobe-grid">
-                <div class="category-card">
-                    <h3>Superiores</h3>
-                    <p>Blusas, suéteres y tops</p>
-                </div>
-                <div class="category-card">
-                    <h3>Inferiores</h3>
-                    <p>Faldas, pantalones y shorts</p>
-                </div>
-                <div class="category-card">
-                    <h3>Calzado</h3>
-                    <p>Botas, tacones y tenis</p>
-                </div>
-                <div class="category-card">
-                    <h3>Accesorios</h3>
-                    <p>Bolsos, lentes y joyería</p>
-                </div>
+    <!-- Contenedor principal simulando una ventana de programa retro -->
+    <div class="retro-window">
+        <!-- Barra superior de la ventana (Estilo MS Paint / Windows OS) -->
+        <div class="window-header">
+            <div class="window-title-area">
+                <span class="window-icon">🎨</span>
+                <span class="window-title">Guardaroba_OS - [Mi_Armario.exe]</span>
             </div>
-        </main>
+            <div class="window-controls">
+                <button class="win-btn">🗕</button>
+                <button class="win-btn">🗖</button>
+                <button class="win-btn close" id="logout-btn">✕</button>
+            </div>
+        </div>
 
-        <!-- Footer -->
-        <footer class="dash-footer">
-            <p>&copy; 2026 Guardaroba. Todos los derechos reservados.</p>
+        <!-- Menú de opciones del sistema -->
+        <div class="window-menu-bar">
+            <div class="menu-items-left">
+                <a href="#" class="menu-link active">Mi Armario</a>
+                <a href="#" class="menu-link">Combinaciones</a>
+                <a href="#" class="menu-link">Favoritos</a>
+                <a href="#" class="menu-link">Configuración</a>
+            </div>
+            <div class="menu-user-info">
+                <span>Hola, ¡Bienvenida!</span>
+            </div>
+        </div>
+
+        <!-- Contenido Central Estilo Interfaz / Paint -->
+        <div class="window-body">
+            
+            <!-- Panel Izquierdo: Herramientas de edición tipo Paint -->
+            <aside class="paint-tools-panel">
+                <div class="tool-box-grid">
+                    <button class="tool-btn active" title="Seleccionar">✂️</button>
+                    <button class="tool-btn" title="Borrar">🧹</button>
+                    <button class="tool-btn" title="Gotero">💧</button>
+                    <button class="tool-btn" title="Lupa">🔍</button>
+                    <button class="tool-btn" title="Pincel">🖌️</button>
+                    <button class="tool-btn" title="Texto">🔤</button>
+                    <button class="tool-btn" title="Relleno">🪣</button>
+                    <button class="tool-btn" title="Formas">⭐</button>
+                </div>
+                <div class="color-palette-mini">
+                    <div class="color-swatch" style="background: #e91ece;"></div>
+                    <div class="color-swatch" style="background: #feb6ff;"></div>
+                    <div class="color-swatch" style="background: #e07f96;"></div>
+                    <div class="color-swatch" style="background: #eff876;"></div>
+                    <div class="color-swatch" style="background: #6ab6e4;"></div>
+                    <div class="color-swatch" style="background: #7013b8;"></div>
+                </div>
+            </aside>
+
+            <!-- Panel Central: Área de Visualización del Outfit/Inicio -->
+            <main class="closet-display-area initial-state">
+                
+                <!-- Carrusel Superior (Prendas Superiores / Tops) -->
+                <div class="carousel-strip">
+                    <button class="carousel-arrow">⏮</button>
+                    <div class="clothing-preview-slot">
+                        <span class="slot-tag">TOP_FASHIONS</span>
+                        <div class="item-card-mini">👚</div>
+                    </div>
+                    <button class="carousel-arrow">⏭</button>
+                </div>
+
+                <!-- Modelo / Maniquí Central -->
+                <div class="avatar-stage">
+                    <div class="avatar-frame">
+                        <div class="pixel-avatar-placeholder">
+                            <span>👩‍🦰✨</span>
+                            <p>AUTODRESS SYSTEM READY</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controles VCR / Reproductor -->
+                <div class="vcr-controls-bar">
+                    <button class="vcr-btn">⏮</button>
+                    <button class="vcr-btn">◀</button>
+                    <button class="vcr-btn active-play">▶ AUTO DRESS</button>
+                    <button class="vcr-btn">▶</button>
+                    <button class="vcr-btn">⏭</button>
+                    <button class="vcr-btn fav-btn" id="like-outfit-btn" title="Guardar en Favoritos">🤍</button>
+                </div>
+
+                <!-- Carrusel Inferior (Faldas / Pantalones) -->
+                <div class="carousel-strip">
+                    <button class="carousel-arrow">⏮</button>
+                    <div class="clothing-preview-slot">
+                        <span class="slot-tag">BOTTOM_FASHIONS</span>
+                        <div class="item-card-mini">👗</div>
+                    </div>
+                    <button class="carousel-arrow">⏭</button>
+                </div>
+
+            </main>
+
+            <main class="closet-display-arena addItem">
+                <div class="form-add">
+                    <form id="add-item-form">
+                        <h3>Añadir Item</h3>
+                        <label for="item-name">Nombre del Item:</label>
+                        <input type="text" id="item-name" name="item-name" required>
+
+                        <label for="item-category">Categoría:</label>
+                        <select id="item-category" name="item-category" required>
+                            <option value="">Selecciona una categoría</option>
+                            <option value="superiores">Superiores</option>
+                            <option value="inferiores">Inferiores</option>
+                            <option value="calzado">Calzado</option>
+                            <option value="accesorios">Accesorios</option>
+                        </select>
+
+                        <label for="item-color">Color:</label>
+                        <input type="color" id="item-color" name="item-color">
+
+                        <button type="submit">Añadir Item</button>
+                </div>
+            </main>
+
+            <!-- Panel Derecho: Inventario Rápido de Categorías -->
+            <aside class="inventory-sidebar">
+                <h3>INVENTORY</h3>
+                <div class="inv-item"><span>🧥 Superiores</span></div>
+                <div class="inv-item"><span>👖 Inferiores</span></div>
+                <div class="inv-item"><span>👠 Calzado</span></div>
+                <div class="inv-item"><span>👜 Accesorios</span></div>
+                <div class="inv-item btn_add-item"><span>➕ Añadir Item</span></div>
+                <div class="inv-item special"><span>✨ DRESS ME</span></div>
+            </aside>
+
+        </div>
+
+        <!-- Barra de Estado Inferior -->
+        <footer class="window-status-bar">
+            <span id="welcome-user-tag">Usuario: Activo</span>
+            <button id="logout-btn-footer" class="text-logout-btn">Cerrar sesión</button>
         </footer>
     </div>
-
-    <!-- Script para proteger la ruta o manejar el cierre de sesión -->
+<div id="toast-container" class="toast-container"></div>
     <script>
-        // Lógica sencilla de cierre de sesión
-        document.getElementById('logout-btn').addEventListener('click', () => {
-            // Aquí puedes limpiar tokens o datos de sesión si usas localStorage
-            localStorage.removeItem('token');
-            window.location.href = '/index.html'; // Redirige al login
+        // Lógica de Favoritos (Like)
+        const likeBtn = document.getElementById('like-outfit-btn');
+        let isFavorite = false;
+
+        likeBtn.addEventListener('click', () => {
+            isFavorite = !isFavorite;
+            if (isFavorite) {
+                likeBtn.textContent = '💖';
+                likeBtn.style.background = '#f8bbd0';
+                showNotification('¡Outfit guardado en Favoritos! ✨', 'success');
+            } else {
+                likeBtn.textContent = '🤍';
+                likeBtn.style.background = '#e0e0e0';
+                showNotification('Eliminado de Favoritos', 'error');
+            }
         });
+
+        // Función de Notificación Toast 
+        function showNotification(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        //Manejo para mostrar/ocultar el formulario de añadir item
+        const inventoryItems = document.querySelectorAll('.inv-item');
+        const addItemFormContainer = document.querySelector('.addItem');
+        const addItemBtn = document.querySelector('.btn_add-item');
+        const initialStateMain = document.querySelector('.initial-state');
+        const originalDisplay = window.getComputedStyle(initialStateMain).display;
+
+        // Mostrar/ocultar formulario de añadir item
+        addItemFormContainer.style.display = 'none'; // Ocultar inicialmente
+        addItemBtn.addEventListener('click', () => {
+            const isShowing = addItemFormContainer.style.display === 'none';
+            addItemFormContainer.style.display = isShowing ? 'block' : 'none';
+            initialStateMain.style.display = isShowing ? 'none' : originalDisplay;
+        });    
+
+        //Manejo de formulario para añadir item
+        const addItemForm = document.getElementById('add-item-form');
+        addItemForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const itemName = document.getElementById('item-name').value;
+            const itemCategory = document.getElementById('item-category').value;
+            const itemColor = document.getElementById('item-color').value;
+
+            if (itemName && itemCategory) {
+                showNotification(`Item "${itemName}" añadido a la categoría "${itemCategory}"`, 'success');
+                addItemForm.reset();
+            } else {
+                showNotification('Por favor, completa todos los campos requeridos.', 'error');
+            }
+        });
+
+        // Cierre de sesión
+        const logoutAction = () => {
+            localStorage.removeItem('token');
+            window.location.href = '/index.html';
+        };
+        document.getElementById('logout-btn').addEventListener('click', logoutAction);
+        document.getElementById('logout-btn-footer').addEventListener('click', logoutAction);
+
     </script>
 </body>
 </html>

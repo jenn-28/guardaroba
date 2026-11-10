@@ -9,12 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const bottomBtnRegister = document.querySelector('.tab-btn[data-target="register"]');
     const bottomBtnLogin = document.querySelector('.tab-btn[data-target="login"]');
 
-    //const para visibilidad de password
-    const togglePasswordBtn = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('new_password');
-    const eyeOpen = document.querySelector('.eye-open');
-    const eyeClosed = document.querySelector('.eye-closed');
-
     //Funcion para botones switch de login y register
     function switchView(target) {
         if (target === 'register') {
@@ -54,9 +48,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    //Funcion para visibilidad de password
-    if (togglePasswordBtn && passwordInput) {
-        togglePasswordBtn.addEventListener('click', () => {
+    const togglePasswordButtons = document.querySelectorAll('.toggle-password');
+
+    togglePasswordButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const wrapper = button.closest('.password-wrapper');
+            const passwordInput = wrapper.querySelector('input');
+            const eyeOpen = button.querySelector('.eye-open');
+            const eyeClosed = button.querySelector('.eye-closed');
+
             // Alternar tipo de input entre 'password' y 'text'
             const isPassword = passwordInput.getAttribute('type') === 'password';
             passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 eyeClosed.style.display = 'none';
             }
         });
-    }
+    });
 
     //Envio del formulario de Registro//
     if (formRegister) {
@@ -87,8 +87,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify({ username, new_email, new_password })
                 });
                 const data = await response.json();
-                alert(data.message);
-                if (data.success) formRegister.reset(); // Limpiar el formulario si el registro fue exitoso{
+                showNotification(data.message, data.success ? 'success' : 'error');
+                if (data.success){
+                    formRegister.reset(); // Limpiar el formulario 
+                    setTimeout(() => {
+                    window.location.href = '/dashboard.html'; // Redirigir a la página de dashboard
+                    }, 2000); // Esperar 2 segundos antes de redirigir
+                } // Limpiar el formulario si el registro fue exitoso{
             }catch (error) {
                 console.error('Error al registrar usuario:', error);
                 alert('Ocurrió un error al registrar. Por favor, inténtalo de nuevo.');
@@ -111,15 +116,34 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify({ email, password })
                 });
                 const data = await response.json();
-                alert(data.message);
+                showNotification(data.message, data.success ? 'success' : 'error');
                 if (data.success){
-                    window.location.href = '/dashboard.html'; // Redirigir a la página de dashboard si el login fue exitoso
+                    setTimeout(() => {
+                    window.location.href = '/dashboard.html'; // Redirigir a la página de dashboard 
+                    }, 1500);
                 } // Limpiar el formulario si el login fue exitoso
             } catch (error) {
                 console.error('Error al iniciar sesión:', error);
                 alert('Ocurrió un error al iniciar sesión. Por favor, inténtalo de nuevo.');
             }
         });
+    }
+
+    //Función para mostrar notificaciones personalizadas
+    function showNotification(message, type = 'success'){
+        const container = document.getElementById('toast-container');
+        if(!container) return;
+
+        //Crear el elemento de la notificación
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.textContent = message;
+        //Añadirlo al contenedor flotante
+        container.appendChild(toast);
+        //Eliminar el elemento del DOM automaticamente después de 3 segundos
+        setTimeout(() => {
+            toast.remove();
+        }, 3000);
     }
 
 });
