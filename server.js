@@ -22,6 +22,7 @@ app.use(express.static('public'));
 
 // Usar Rutas de la API
 app.use('/api/auth', authRoutes);
+app.use('/api/prendas', require('./routes/prendaRoutes'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -657,7 +657,7 @@ h1 {
     padding: 6px 15px;
     border: 2px solid #d81b60;
     border-radius: 4px;
-    width: 80%;
+    width: 90%;
     justify-content: space-between;
 }
 
@@ -674,6 +674,7 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 90%;
 }
 
 .slot-tag {
@@ -723,9 +724,9 @@ h1 {
 /* Barra de controles VCR inferior */
 .vcr-controls-bar {
     display: flex;
-    gap: 4px;
+    gap: 5px;
     background: #ddd;
-    padding: 4px;
+    padding: 5px 10px;
     border: 1px solid #999;
 }
 
@@ -794,6 +795,496 @@ h1 {
     justify-content: space-between;
     color: #444;
 }
+
+/* --- Contenedor Principal --- */
+.closet-display-arena.addItem {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Permite que el scroll empiece desde arriba */
+  width: 100%;
+  height: 100%;
+  padding: .2rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+/* Contenedor base para las nuevas vistas <main> */
+.closet-display-arena.savedOutfits,
+.closet-display-arena.favoriteOutfits,
+.closet-display-arena.profileSettings {
+    background: #fff;
+    border: 2px inset #888;
+    width: 100%;
+    height: 100%;
+    padding: 1.5rem;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+/* Scrollbar personalizada al estilo Y2K */
+.closet-display-arena.addItem::-webkit-scrollbar {
+  width: 8px;
+}
+.closet-display-arena.addItem::-webkit-scrollbar-track {
+  background: #ffe8f0;
+}
+.closet-display-arena.addItem::-webkit-scrollbar-thumb {
+  background: #f05c92;
+  border-radius: 10px;
+}
+/* Scrollbar Y2K compartida para todas las vistas nuevas */
+.closet-display-arena.savedOutfits::-webkit-scrollbar,
+.closet-display-arena.favoriteOutfits::-webkit-scrollbar,
+.closet-display-arena.profileSettings::-webkit-scrollbar {
+    width: 8px;
+}
+
+.closet-display-arena.savedOutfits::-webkit-scrollbar-track,
+.closet-display-arena.favoriteOutfits::-webkit-scrollbar-track,
+.closet-display-arena.profileSettings::-webkit-scrollbar-track {
+    background: #ffe8f0;
+}
+
+.closet-display-arena.savedOutfits::-webkit-scrollbar-thumb,
+.closet-display-arena.favoriteOutfits::-webkit-scrollbar-thumb,
+.closet-display-arena.profileSettings::-webkit-scrollbar-thumb {
+    background: #f05c92;
+    border-radius: 10px;
+}
+
+/* Títulos de sección estilo Pop/Bubble Y2K */
+.savedOutfits h3,
+.favoriteOutfits h3,
+.profileSettings h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #ff4292;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-bottom: 3px dashed #f8e569;
+    padding-bottom: 0.6rem;
+    margin-bottom: 1.25rem;
+    text-align: center;
+}
+
+/* Card del Formulario - Estilo Ventana/Papel Y2K */
+.form-add {
+  background: #ffe8f0; /* Fondo rosa pastel de la interfaz */
+  border: 3px solid #fdefb6; /* Borde amarillo exterior */
+  padding: 2rem;
+  width: 100%;
+  max-width: match-parent; /* Ancho ajustado para abarcar mejor el área */
+  box-shadow: -4px 4px 0px #fd649c, 4px -4px 0px #ffeda5;
+  color: #d81b60;
+  font-family: 'Syne', sans-serif;
+  box-sizing: border-box;
+  margin: auto 0; /* Centra verticalmente si hay espacio de sobra */
+}
+
+/* Título estilo Pop/Bubble Y2K */
+.form-add h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 1.25rem;
+  text-align: center;
+  color: #ff4292;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-bottom: 3px dashed #f8e569;
+  padding-bottom: 0.75rem;
+}
+
+/* --- Grupos de Campos (Inputs & Selects) --- */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  color: #d81b60;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.form-group input[type="text"],
+.form-group select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: #ffffff;
+  border: 2px solid #ff4292;
+  border-radius: 12px;
+  color: #4a154b;
+  font-size: 0.95rem;
+  font-weight: 600;
+  outline: none;
+  transition: all 0.25s ease;
+  box-shadow: 3px 3px 0px #ffe5ec;
+}
+
+.form-group input[type="text"]:focus,
+.form-group select:focus {
+  border-color: #f8f66c;
+  box-shadow: 0 0 0 4px rgba(255, 239, 68, 0.6), 3px 3px 0px #ff4292;
+  background-color: #fffde7;
+}
+
+/* Selector de Color estilo Y2K */
+.form-group input[type="color"] {
+  -webkit-appearance: none;
+  border: 2px solid #ff4292;
+  border-radius: 12px;
+  width: 100%;
+  height: 44px;
+  cursor: pointer;
+  background-color: #ffffff;
+  padding: 4px;
+}
+
+.form-group input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-group input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 8px;
+}
+
+/* --- Área de Carga de la Imagen (Upload Box) --- */
+.upload-box {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  border: 3px dashed #ff4292;
+  border-radius: 16px;
+  background-color: #fff0f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 0 10px rgba(255, 66, 146, 0.15);
+}
+
+.upload-box:hover {
+  border-color: #ffd93d;
+  background-color: #fffde7;
+  box-shadow: 0 0 12px rgba(248, 224, 130, 0.8);
+}
+
+/* Input transparente */
+.file-input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.upload-content {
+  text-align: center;
+  color: #d81b60;
+  pointer-events: none;
+}
+
+.upload-icon {
+  font-size: 2.4rem;
+  display: block;
+  margin-bottom: 0.25rem;
+  filter: drop-shadow(2px 2px 0px #ffd93d);
+}
+
+.upload-content p {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Imagen de Vista Previa */
+.image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* --- Botón Chic / Clueless --- */
+.form-buttons {
+  margin-top: 1.2rem;
+}
+
+.form-group-btns{
+    display: flex;
+    flex-direction: row;
+    padding: 2em;
+}
+
+.btn-submit{
+  width: 100%;
+  padding: 0.9rem;
+  background: linear-gradient(135deg, #f774aa 0%, #f38bbd 50%, #f5bfe0 100%);
+  color: #ffffff;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  border: 2px solid #ffffff;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px #ff8ce4;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+  margin: 2%;
+}
+
+.btn-submit:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #ff8ce4;
+  background: linear-gradient(135deg, #f5bfe0 0%, #f774aa 100%);
+}
+
+.btn-submit:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #4a154b;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* --- 1. Grid de Combinaciones y Favoritos --- */
+.outfits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 16px;
+    padding: 4px;
+}
+
+.outfit-card {
+    background: #ffe8f0;
+    border: 3px solid #fdefb6;
+    border-radius: 14px;
+    padding: 12px;
+    box-shadow: -3px 3px 0px #fd649c, 3px -3px 0px #ffeda5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+}
+
+.outfit-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: -5px 5px 0px #d81b60, 4px -4px 0px #ffeda5;
+}
+
+.outfit-items-preview {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    width: 100%;
+    background: #ffffff;
+    border: 2px solid #ff4292;
+    border-radius: 10px;
+    padding: 8px;
+}
+
+.outfit-items-preview img {
+    width: 100%;
+    height: 75px;
+    object-fit: contain;
+    background: #fff9fb;
+    border-radius: 6px;
+    border: 1px solid #f8bbd0;
+    padding: 2px;
+}
+
+.outfit-card-footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #ad1457;
+}
+
+.btn-delete-outfit {
+    background: #ffffff;
+    border: 1.5px solid #d81b60;
+    color: #d81b60;
+    border-radius: 8px;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-delete-outfit:hover {
+    background: #d81b60;
+    color: #ffffff;
+}
+
+/* Mensaje cuando no hay outfits guardados */
+.outfits-grid p,
+.savedOutfits > p,
+.favoriteOutfits > p {
+    grid-column: 1 / -1;
+    text-align: center;
+    background: #fff0f5;
+    border: 2px dashed #ff4292;
+    border-radius: 14px;
+    padding: 2rem;
+    color: #ad1457;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+/* --- 2. Panel de Configuración de Perfil --- */
+#profile-settings-form {
+    background: #ffe8f0;
+    border: 3px solid #fdefb6;
+    padding: 1.8rem;
+    max-width: 520px;
+    margin: 0 auto;
+    box-shadow: -4px 4px 0px #fd649c, 4px -4px 0px #ffeda5;
+}
+
+#profile-settings-form input[type="email"],
+#profile-settings-form input[type="password"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: #ffffff;
+    border: 2px solid #ff4292;
+    border-radius: 12px;
+    color: #4a154b;
+    font-size: 0.95rem;
+    font-weight: 600;
+    outline: none;
+    transition: all 0.25s ease;
+    box-shadow: 3px 3px 0px #ffe5ec;
+}
+
+#profile-settings-form input[type="email"]:focus,
+#profile-settings-form input[type="password"]:focus {
+    border-color: #f8f66c;
+    box-shadow: 0 0 0 4px rgba(255, 239, 68, 0.6), 3px 3px 0px #ff4292;
+    background-color: #fffde7;
+}
+
+/* --- 3. Estados Interactivos del Armario, Filtros y Categorías --- */
+
+/* Categoría desactivada en el sidebar derecho (cuando se oculta su carrusel) */
+.inv-item.inactive-category {
+    background: #e0e0e0;
+    color: #888;
+    border-style: dashed;
+    opacity: 0.65;
+    text-decoration: line-through;
+}
+
+/* Contenedor de los carruseles dentro del main principal */
+.closet-carrusel {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    overflow-y: auto;
+    padding: 4px 0;
+}
+
+/* Botones de editar y eliminar dentro de la tarjeta del carrusel */
+.item-card-mini {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 95px;
+    padding: 4px 28px;
+}
+
+.item-card-mini img {
+    max-height: 95px;
+    max-width: 140px;
+    object-fit: contain;
+    filter: drop-shadow(2px 3px 0px rgba(216, 27, 96, 0.2));
+}
+
+.btn-edit-item,
+.btn-del-item {
+    background: #ffffff;
+    border: 1.5px solid #d81b60;
+    border-radius: 6px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 1px 1px 0px #fd649c;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.btn-edit-item:hover {
+    background: #fffde7;
+    transform: scale(1.1);
+}
+
+.btn-del-item:hover {
+    background: #ffcdd2;
+    transform: scale(1.1);
+}
+
+/* Mensaje cuando el armario está vacío */
+.no-items-message {
+    text-align: center;
+    background: #ffe8f0;
+    border: 3px dashed #ff4292;
+    border-radius: 18px;
+    padding: 2.5rem 2rem;
+    margin: auto;
+    box-shadow: -4px 4px 0px #fd649c;
+}
+
+.no-items-message h4 {
+    font-family: 'Syne', sans-serif;
+    color: #ad1457;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.no-items-message .btn-add-item {
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    background: linear-gradient(135deg, #f774aa 0%, #d81b60 100%);
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    border-radius: 25px;
+    border: 2px solid #fff;
+    box-shadow: 3px 3px 0px #ff8ce4;
+    transition: transform 0.2s ease;
+}
+
+.no-items-message .btn-add-item:hover {
+    transform: translate(-2px, -2px);
+}
+
 
 /* Adaptación a Teléfonos Celulares (Responsivo) */
 @media (max-width: 900px) {
