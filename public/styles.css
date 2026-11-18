@@ -511,6 +511,7 @@ h1 {
     box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
+    z-index: 10;
 }
 
 /* Barra superior de la ventana */
@@ -1025,12 +1026,6 @@ h1 {
   margin-top: 1.2rem;
 }
 
-.form-group-btns{
-    display: flex;
-    flex-direction: row;
-    padding: 2em;
-}
-
 .btn-submit{
   width: 100%;
   padding: 0.9rem;
@@ -1067,9 +1062,11 @@ h1 {
 /* --- 1. Grid de Combinaciones y Favoritos --- */
 .outfits-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    grid-template-columns: repeat(3, 1fr); /* 3 tarjetas por renglón */
     gap: 16px;
-    padding: 4px;
+    padding: 6px;
+    width: 100%;
+    align-items: start;
 }
 
 .outfit-card {
@@ -1089,6 +1086,39 @@ h1 {
 .outfit-card:hover {
     transform: translate(-2px, -2px);
     box-shadow: -5px 5px 0px #d81b60, 4px -4px 0px #ffeda5;
+}
+
+/* Tarjeta cuadrada en vista normal */
+.outfit-card:not(.expanded) {
+    aspect-ratio: 1 / 1; /* Fuerza forma cuadrada */
+    width: 100%;
+    min-width: 0;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+/* Contenedor interno de imagen ajustado al cuadro */
+.outfit-card:not(.expanded) .outfit-items-preview.single-item-preview {
+    flex: 1;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    padding: 8px;
+}
+
+.outfit-card:not(.expanded) .outfit-items-preview.single-item-preview img {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Para que el nombre largo no desborde la tarjeta cuadrada */
+.outfit-card:not(.expanded) .outfit-card-footer span:first-child {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 68%;
 }
 
 .outfit-items-preview {
@@ -1184,6 +1214,34 @@ h1 {
     border-color: #f8f66c;
     box-shadow: 0 0 0 4px rgba(255, 239, 68, 0.6), 3px 3px 0px #ff4292;
     background-color: #fffde7;
+}
+
+/* Contenedor de botones en Ajustes de Perfil */
+#profile-settings-form .form-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 1.5rem;
+}
+
+#profile-settings-form .form-buttons .btn-submit {
+    flex: 1;
+    font-size: 0.95rem;
+    padding: 0.85rem 1rem;
+}
+
+/* Estilo del botón Eliminar Perfil */
+.btn-submit.btn-delete,
+.btn-sumbmit.btn-delete {
+    background: linear-gradient(135deg, #ff5252 0%, #c62828 100%);
+    color: #ffffff;
+    box-shadow: 4px 4px 0px #4a154b;
+}
+
+.btn-submit.btn-delete:hover,
+.btn-sumbmit.btn-delete:hover {
+    background: linear-gradient(135deg, #d32f2f 0%, #8e0000 100%);
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px #4a154b;
 }
 
 /* --- 3. Estados Interactivos del Armario, Filtros y Categorías --- */
@@ -1285,6 +1343,268 @@ h1 {
     transform: translate(-2px, -2px);
 }
 
+/* Minibotones de Editar y Eliminar en tarjetas de Outfits */
+.outfit-card-actions {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    gap: 4px;
+    z-index: 5;
+}
+
+.btn-edit-outfit,
+.btn-del-outfit {
+    background: #ffffff;
+    border: 1.5px solid #d81b60;
+    border-radius: 6px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 11px;
+    box-shadow: 1px 1px 0px #fd649c;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.btn-edit-outfit:hover {
+    background: #fffde7;
+    transform: scale(1.1);
+}
+
+.btn-del-outfit:hover {
+    background: #ffcdd2;
+    transform: scale(1.1);
+}
+
+/* Tarjeta expandida a pantalla completa (Al hacer clic) */
+.outfit-card {
+    cursor: zoom-in;
+}
+
+.outfit-card.expanded {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9998;
+    background: rgba(26, 26, 26, 0.85);
+    backdrop-filter: blur(6px);
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    cursor: zoom-out;
+    transform: none !important;
+}
+
+.outfit-card.expanded .outfit-items-preview {
+    max-width: 650px;
+    width: 90%;
+    max-height: 75vh;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 20px;
+    background: #ffe8f0;
+    border: 4px solid #fdefb6;
+    box-shadow: -6px 6px 0px #fd649c, 6px -6px 0px #ffeda5;
+}
+
+.outfit-card.expanded .outfit-items-preview img {
+    height: 200px;
+    background: #ffffff;
+}
+
+.outfit-card.expanded .outfit-card-footer {
+    max-width: 650px;
+    width: 90%;
+    background: #ffffff;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.outfit-card.expanded .outfit-card-actions {
+    top: 24px;
+    right: 24px;
+}
+
+.outfit-card.expanded .btn-edit-outfit,
+.outfit-card.expanded .btn-del-outfit {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+}
+
+/*Tarjetas de prenda individual*/
+.outfit-items-preview.single-item-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 165px;
+    padding: 12px;
+}
+
+.outfit-items-preview.single-item-preview img {
+    width: 100%;
+    height: 100%;
+    max-height: 140px;
+    object-fit: contain;
+    border: none;
+    background: transparent;
+}
+
+/* Vista expandida a pantalla completa para prenda individual */
+.outfit-card.expanded .outfit-items-preview.single-item-preview {
+    max-width: 500px;
+    height: 380px;
+    padding: 24px;
+}
+
+.outfit-card.expanded .outfit-items-preview.single-item-preview img {
+    max-height: 330px;
+}
+
+/* LOGOS GIGANTES LATERALES (DETRÁS DE LA VENTANA Y OCULTOS EN MÓVIL) */
+
+/* Asegura que la ventana principal siempre esté por encima */
+.retro-window {
+    position: relative;
+    z-index: 10;
+}
+
+.bg-side-logo {
+    position: fixed;
+    top: 50%;
+    width: 340px; /* Tamaño grande */
+    height: auto;
+    object-fit: contain;
+    z-index: 1; /* Queda por debajo de .retro-window (z-index: 10) */
+    pointer-events: none;
+    user-select: none;
+    filter: drop-shadow(4px 6px 0px rgba(216, 27, 96, 0.22));
+}
+
+.bg-side-logo.left {
+    left: -20px;
+    transform: translateY(-50%) rotate(-10deg);
+}
+
+.bg-side-logo.right {
+    right: -20px;
+    transform: translateY(-50%) rotate(10deg);
+}
+
+/* =========================================================
+   DISTRIBUCIÓN PROPORCIONAL DE CARRUSELES EN EL ARMARIO
+   ========================================================= */
+
+/* El área central y el contenedor de carruseles ocupan el 100% del alto */
+.closet-display-area {
+    height: 100%;
+    overflow: hidden;
+}
+
+.closet-carrusel {
+    flex: 1;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+    padding: 4px 0;
+}
+
+/* Cada carrusel visible se reparte el espacio disponible en partes iguales */
+.carousel-strip {
+    flex: 1 1 0;
+    min-height: 0;
+    width: 92%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+}
+
+/* El slot interno y la tarjeta crecen proporcionalmente con la caja */
+.clothing-preview-slot {
+    flex: 1;
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-card-mini {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 32px;
+}
+
+/* La imagen escala dinámicamente según el tamaño de la sección */
+.item-card-mini img {
+    width: auto;
+    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    filter: drop-shadow(2px 3px 0px rgba(216, 27, 96, 0.2));
+}
+
+/* La barra VCR inferior conserva su tamaño fijo sin encogerse */
+.vcr-controls-bar {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* =========================================================
+   ESTADOS DE PERMISOS PARA ROL INVITADO
+   ========================================================= */
+
+.inv-item.disabled-limit,
+.btn-add-item.disabled-limit,
+.vcr-btn.disabled-role {
+    opacity: 0.45;
+    cursor: not-allowed !important;
+    background: #e0e0e0 !important;
+    color: #777 !important;
+    border-color: #bbb !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.guest-badge {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* En móvil o pantallas pequeñas desaparecen para no estorbar */
+@media (max-width: 900px) {
+    .bg-side-logo {
+        display: none;
+    }
+}
 
 /* Adaptación a Teléfonos Celulares (Responsivo) */
 @media (max-width: 900px) {
@@ -1305,6 +1625,19 @@ h1 {
     .auth-container {
         padding: 20px;
     }
+
 }
 
+/* Adaptación a celular: 1 tarjeta por renglón */
+@media (max-width: 768px) {
+    .outfits-grid {
+        grid-template-columns: 1fr; /* 1 tarjeta por renglón en celular */
+        gap: 14px;
+    }
+
+    .outfit-card:not(.expanded) {
+        max-width: 340px;
+        margin: 0 auto;
+    }
+}
 

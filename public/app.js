@@ -89,10 +89,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
                 showNotification(data.message, data.success ? 'success' : 'error');
                 if (data.success){
-                    formRegister.reset(); // Limpiar el formulario 
+                    sessionStorage.removeItem('guestMode');
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    formRegister.reset();
                     setTimeout(() => {
-                    window.location.href = '/dashboard.html'; // Redirigir a la página de dashboard
-                    }, 2000); // Esperar 2 segundos antes de redirigir
+                        window.location.href = '/dashboard.html';
+                    }, 2000);// Esperar 2 segundos antes de redirigir
                 } // Limpiar el formulario si el registro fue exitoso{
             }catch (error) {
                 console.error('Error al registrar usuario:', error);
@@ -118,8 +120,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
                 showNotification(data.message, data.success ? 'success' : 'error');
                 if (data.success){
+                    sessionStorage.removeItem('guestMode');
+                    localStorage.setItem('user', JSON.stringify(data.user));
                     setTimeout(() => {
-                    window.location.href = '/dashboard.html'; // Redirigir a la página de dashboard 
+                        window.location.href = '/dashboard.html';
                     }, 1500);
                 } // Limpiar el formulario si el login fue exitoso
             } catch (error) {
@@ -147,3 +151,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+// Modo Invitado (Rol: guest - datos volátiles en memoria)
+const btnGuestMode = document.getElementById('btn-guest-mode');
+if (btnGuestMode) {
+    btnGuestMode.addEventListener('click', () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        sessionStorage.setItem('guestMode', 'true');
+        window.location.href = '/dashboard.html';
+    });
+}

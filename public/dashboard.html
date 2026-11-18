@@ -11,6 +11,9 @@
 </head>
 <body class="retro-os-body">
 
+    <!--Logo lateral izq-->
+    <img src="img/logo_grb.png" alt="Logo Guardaroba" class="bg-side-logo left" aria-hidden="true">
+    
     <!-- Contenedor principal simulando una ventana de programa retro -->
     <div class="retro-window">
         <!-- Barra superior de la ventana (Estilo MS Paint / Windows OS) -->
@@ -30,7 +33,7 @@
         <div class="window-menu-bar">
             <div class="menu-items-left">
                 <a href="#" class="menu-link active" data-view="armario">Mi Armario</a>
-                <a href="#" class="menu-link" data-view="combinaciones">Combinaciones</a>
+                <a href="#" class="menu-link" data-view="prendas">Mis Prendas</a>
                 <a href="#" class="menu-link" data-view="favoritos">Favoritos</a>
                 <a href="#" class="menu-link" data-view="configuracion">Configuración</a>
             </div>
@@ -166,14 +169,14 @@
                 </div>
             </main>
 
-            <!-- Panel de guardados-->
-            <main class="closet-display-arena savedOutfits" id="view-combinaciones" style="display: none;">
-                <h3>Mis Combinaciones</h3>
-                <div class="outfits-grid" id="saved-outfits-container"></div>
+            <!-- Panel de prendass-->
+            <main class="closet-display-arena savedOutfits" id="view-prendas" style="display: none;">
+                <h3>Mis Prendas</h3>
+                <div class="outfits-grid" id="prendas-grid-container"></div>
             </main>
 
             <!-- Panel de favoritos -->
-            <main class="closet-display-arena favoriteOutfits">
+            <main class="closet-display-arena favoriteOutfits" style="display: none;">
                 <h3>Outfits Favoritos</h3>
                 <div class="outfits-grid" id="favorite-outfits-container"></div>
             </main>
@@ -196,7 +199,7 @@
                     </div>
                     <div class="form-buttons">
                         <button type="submit" class="btn-submit">Guardar Cambios</button>
-                        <button type="submit" class="btn-sumbmit btn-delete">Eliminar perfil</button>
+                        <button type="button" id="btn-delete-profile" class="btn-submit btn-delete">Eliminar perfil</button>
                     </div>
                 </form>
                 
@@ -222,7 +225,11 @@
             <button id="logout-btn-footer" class="text-logout-btn">Cerrar sesión</button>
         </footer>
     </div>
-<div id="toast-container" class="toast-container"></div>
+
+    <!--Logos laterales der-->
+    <img src="img/logo_grb.png" alt="Logo Guardaroba" class="bg-side-logo right" aria-hidden="true">
+
+    <div id="toast-container" class="toast-container"></div>
     <div id="toast-container" class="toast-container"></div>
 <script src="consultas.js"></script>
 </body>

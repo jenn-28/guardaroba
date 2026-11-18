@@ -28,5 +28,7 @@ router.delete('/:id', prendaController.eliminarPrenda);
 
 router.get('/outfits', prendaController.obtenerOutfits);
 router.post('/outfits', prendaController.guardarOutfit);
+router.put('/outfits/:id', prendaController.actualizarOutfit);
+router.delete('/outfits/:id', prendaController.eliminarOutfit);
 
 module.exports = router;

@@ -1,10 +1,12 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const path = require('path');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 
-// Cargar variables de entorno desde src/.env
+// Cargar variables de entorno
+dotenv.config();
 dotenv.config({ path: './src/.env' });
 
 // Conectar a MongoDB Atlas
@@ -18,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Servir archivos estáticos (HTML, CSS, JS del front)
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Usar Rutas de la API
 app.use('/api/auth', authRoutes);
