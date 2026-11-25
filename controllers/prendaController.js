@@ -73,26 +73,27 @@ exports.eliminarPrenda = async (req, res) => {
     }
 };
 
-// GUARDAR COMBINACIÓN (AUTO DRESS O FAVORITO)
+// GUARDAR OUTFIT (POST /api/prendas/outfits)
 exports.guardarOutfit = async (req, res) => {
     try {
-        const { items, userId, tipo } = req.body;
-        if (!userId) return res.status(400).json({ success: false, message: 'Usuario no identificado' });
-        if (!items || items.length < 2) {
-            return res.status(400).json({ success: false, message: 'Se requieren al menos 2 prendas' });
-        }
+        const { userId, usuario, items, tipo, nombre } = req.body;
 
         const nuevoOutfit = new Outfit({
-            usuario: userId,
+            usuario: usuario || userId,
+            nombre: nombre && nombre.trim() !== '' ? nombre.trim() : `Outfit (${items.length} prendas)`,
             tipo: tipo || 'favorito',
             items
         });
-        await nuevoOutfit.save();
 
-        const msg = tipo === 'auto' ? 'Combinación guardada en historial ✨' : '¡Guardado en Favoritos! 💖';
-        res.status(201).json({ success: true, message: msg, outfit: nuevoOutfit });
+        await nuevoOutfit.save();
+        res.status(201).json({
+            success: true,
+            message: 'Outfit guardado en Favoritos 💖',
+            outfit: nuevoOutfit
+        });
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Error al guardar combinación' });
+        console.error('Error al guardar outfit:', error);
+        res.status(500).json({ success: false, message: 'Error al guardar el outfit' });
     }
 };
 
@@ -112,18 +113,24 @@ exports.obtenerOutfits = async (req, res) => {
     }
 };
 
-// ACTUALIZAR COMBINACIÓN EXISTENTE
+// MODIFICAR OUTFIT (PUT /api/prendas/outfits/:id)
 exports.actualizarOutfit = async (req, res) => {
     try {
         const { id } = req.params;
-        const { items } = req.body;
-        if (!items || items.length < 2) {
-            return res.status(400).json({ success: false, message: 'Selecciona al menos 2 prendas' });
+        const datos = {
+            items: req.body.items,
+            tipo: req.body.tipo || 'favorito'
+        };
+
+        if (req.body.nombre && req.body.nombre.trim() !== '') {
+            datos.nombre = req.body.nombre.trim();
         }
-        const outfit = await Outfit.findByIdAndUpdate(id, { items }, { new: true });
-        res.json({ success: true, message: 'Combinación actualizada', outfit });
+
+        const outfit = await Outfit.findByIdAndUpdate(id, datos, { new: true });
+        res.json({ success: true, message: 'Outfit actualizado ✨', outfit });
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Error al actualizar combinación' });
+        console.error('Error al actualizar outfit:', error);
+        res.status(500).json({ success: false, message: 'Error al actualizar outfit' });
     }
 };
 

@@ -65,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     function aplicarPermisosPorRol() {
         if (rolActual === 'guest') {
-            // Ocultar pestañas exclusivas de usuarios registrados
             document.querySelectorAll('.window-menu-bar .menu-link').forEach(link => {
                 const texto = link.textContent.trim().toLowerCase();
                 if (!texto.includes('armario')) {
@@ -73,14 +72,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // Deshabilitar botón de Favoritos en VCR
             const btnFav = document.getElementById('like-outfit-btn');
             if (btnFav) {
                 btnFav.classList.add('disabled-role');
                 btnFav.title = 'Inicia sesión o regístrate para guardar outfits en Favoritos';
             }
 
-            // Cambiar texto de cerrar sesión a salir de modo prueba
             const btnLogoutFooter = document.getElementById('logout-btn-footer');
             if (btnLogoutFooter) btnLogoutFooter.textContent = 'Salir del modo invitado / Registrarse';
         }
@@ -96,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const categorias = ['superiores', 'inferiores', 'calzado', 'accesorios'];
         const todasLlenas = categorias.every(cat => contarPrendasPorCategoria(cat) >= LIMITE_PRENDAS_INVITADO);
 
-        // Bloquear / desbloquear botones de Añadir Item si ya llenó las 4 categorías (12 prendas)
         const btnAddSidebar = document.querySelector('.inventory-sidebar .btn_add-item');
         const btnAddEmpty = document.querySelector('.no-items-message .btn-add-item');
 
@@ -110,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
             btnAddEmpty.classList.toggle('disabled-limit', todasLlenas);
         }
 
-        // Actualizar opciones del <select> de categorías en el formulario
         const selectCat = document.getElementById('item-category');
         if (selectCat) {
             Array.from(selectCat.options).forEach(opt => {
@@ -118,7 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const cantidad = contarPrendasPorCategoria(opt.value);
                 const nombreBase = opt.value.charAt(0).toUpperCase() + opt.value.slice(1);
 
-                // Si estamos editando una prenda de esta misma categoría, permitir mantenerla
                 const esCategoriaDeEdicion = idPrendaEditando &&
                     todasLasPrendas.find(p => p._id === idPrendaEditando)?.categoria === opt.value;
 
@@ -199,9 +193,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btnEliminarPerfil) {
             btnEliminarPerfil.addEventListener('click', async (e) => {
                 e.preventDefault();
-                if (!confirm('⚠️ ¿Estás segura de eliminar tu perfil? Se borrarán todas tus prendas y favoritos permanentemente.')) {
-                    return;
-                }
+                // MODAL PERSONALIZADO: Confirmar eliminación de cuenta
+                const confirmado = await mostrarConfirmacionY2K({
+                    titulo: '¿Eliminar tu cuenta?',
+                    texto: 'Se borrarán todas tus prendas y outfits favoritos permanentemente. Esta acción no se puede deshacer.',
+                    icono: '🚨',
+                    textoConfirmar: 'Sí, borrar todo',
+                    textoCancelar: 'Cancelar'
+                });
+                if (!confirmado) return;
 
                 try {
                     const res = await fetch(`${AUTH_URL}/profile/${usuarioActual._id}`, {
@@ -230,7 +230,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function mostrarVista(nombreVista) {
-        // Bloquear acceso por código a vistas restringidas para invitados
         if (rolActual === 'guest' && ['prendas', 'favoritos', 'configuracion'].includes(nombreVista)) {
             showNotification('Regístrate para desbloquear esta sección 🔒', 'error');
             return;
@@ -297,7 +296,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     async function cargarPrendas() {
         if (rolActual === 'guest') {
-            // En modo invitado los datos viven solo en memoria RAM
             verificarLimitesInvitado();
             actualizarVistaPrincipal();
             return;
@@ -516,7 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img src="${prenda.imagen}" alt="${prenda.nombre}">
                 </div>
                 <div class="outfit-card-footer">
-                    <span>${prenda.nombre}</span>
+                    <span title="${prenda.nombre}">${prenda.nombre}</span>
                     <span>${fecha}</span>
                 </div>
             `;
@@ -531,9 +529,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 prepararEdicionPrenda(prenda);
             });
 
+            // MODAL PERSONALIZADO: Eliminar prenda desde Mis Prendas
             card.querySelector('.btn-del-outfit').addEventListener('click', async (e) => {
                 e.stopPropagation();
-                if (confirm(`¿Eliminar "${prenda.nombre}"?`)) {
+                const confirmado = await mostrarConfirmacionY2K({
+                    titulo: '¿Eliminar prenda?',
+                    texto: `Se borrará "${prenda.nombre}" de tu guardarropa.`,
+                    icono: '🗑️',
+                    textoConfirmar: 'Sí, eliminar',
+                    textoCancelar: 'Conservar'
+                });
+                if (confirmado) {
                     await eliminarPrendaDB(prenda._id);
                 }
             });
@@ -640,8 +646,17 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         slot.querySelector('.btn-edit-item').addEventListener('click', () => prepararEdicionPrenda(prenda));
-        slot.querySelector('.btn-del-item').addEventListener('click', () => {
-            if (confirm(`¿Eliminar "${prenda.nombre}"?`)) eliminarPrendaDB(prenda._id);
+
+        // MODAL PERSONALIZADO: Eliminar prenda desde Mi Armario
+        slot.querySelector('.btn-del-item').addEventListener('click', async () => {
+            const confirmado = await mostrarConfirmacionY2K({
+                titulo: '¿Eliminar prenda?',
+                texto: `Se borrará "${prenda.nombre}" de tu guardarropa.`,
+                icono: '🗑️',
+                textoConfirmar: 'Sí, eliminar',
+                textoCancelar: 'Conservar'
+            });
+            if (confirmado) eliminarPrendaDB(prenda._id);
         });
     }
 
@@ -785,6 +800,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
+                // MODAL PERSONALIZADO: Pedir nombre o etiqueta del outfit (RF08)
+                const nombreIngresado = await mostrarPromptY2K({
+                    titulo: idOutfitEditando ? 'Actualizar Outfit' : 'Guardar en Favoritos',
+                    texto: 'Asigna un nombre o etiqueta a esta combinación:',
+                    placeholder: 'Ej. Casual Otoño, Fiesta, Oficina...',
+                    icono: '💖',
+                    textoConfirmar: 'Guardar Outfit',
+                    textoCancelar: 'Cancelar'
+                });
+                if (nombreIngresado === null) return;
+
+                const nombreOutfit = nombreIngresado.trim() || `Outfit (${idsSeleccionados.length} prendas)`;
+
                 try {
                     const url = idOutfitEditando ? `${API_URL}/outfits/${idOutfitEditando}` : `${API_URL}/outfits`;
                     const method = idOutfitEditando ? 'PUT' : 'POST';
@@ -792,7 +820,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     const res = await fetch(url, {
                         method,
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ userId: usuarioActual._id, items: idsSeleccionados, tipo: 'favorito' })
+                        body: JSON.stringify({
+                            userId: usuarioActual._id,
+                            nombre: nombreOutfit,
+                            items: idsSeleccionados,
+                            tipo: 'favorito'
+                        })
                     });
                     const data = await res.json();
                     showNotification(data.message, data.success ? 'success' : 'error');
@@ -841,7 +874,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${outfit.items.map(item => `<img src="${item.imagen}" alt="${item.nombre}" title="${item.nombre}">`).join('')}
                     </div>
                     <div class="outfit-card-footer">
-                        <span>${outfit.items.length} prendas</span>
+                        <span title="${outfit.nombre || ''}">${outfit.nombre || `${outfit.items.length} prendas`}</span>
                         <span>${fecha}</span>
                     </div>
                 `;
@@ -874,9 +907,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     showNotification('Modo edición: ajusta las prendas y pulsa 🤍 para guardar cambios', 'success');
                 });
 
+                // MODAL PERSONALIZADO: Eliminar outfit de Favoritos
                 card.querySelector('.btn-del-outfit').addEventListener('click', async (e) => {
                     e.stopPropagation();
-                    if (!confirm('¿Eliminar este outfit de Favoritos?')) return;
+                    const confirmado = await mostrarConfirmacionY2K({
+                        titulo: '¿Quitar de Favoritos?',
+                        texto: `Se eliminará "${outfit.nombre || 'este outfit'}" de tus favoritos.`,
+                        icono: '💔',
+                        textoConfirmar: 'Sí, quitar',
+                        textoCancelar: 'Cancelar'
+                    });
+                    if (!confirmado) return;
+
                     const resDel = await fetch(`${API_URL}/outfits/${outfit._id}`, { method: 'DELETE' });
                     const dataDel = await resDel.json();
                     showNotification(dataDel.message, dataDel.success ? 'success' : 'error');
@@ -891,7 +933,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 8. LOGOUT Y NOTIFICACIONES
+    // 8. LOGOUT, MODALES Y NOTIFICACIONES
     // ==========================================
     function configurarLogout() {
         const logoutAction = () => {
@@ -903,6 +945,92 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         document.getElementById('logout-btn')?.addEventListener('click', logoutAction);
         document.getElementById('logout-btn-footer')?.addEventListener('click', logoutAction);
+    }
+
+    function mostrarConfirmacionY2K({
+        titulo = '¿Estás segura?',
+        texto = '',
+        icono = '⚠️',
+        textoConfirmar = 'Sí, eliminar',
+        textoCancelar = 'Cancelar',
+        peligro = true
+    }) {
+        return new Promise((resolve) => {
+            const overlay = document.createElement('div');
+            overlay.className = 'y2k-swal-overlay';
+
+            overlay.innerHTML = `
+                <div class="y2k-swal-box">
+                    <span class="y2k-swal-icon">${icono}</span>
+                    <h4 class="y2k-swal-title">${titulo}</h4>
+                    <p class="y2k-swal-text">${texto}</p>
+                    <div class="y2k-swal-actions">
+                        <button type="button" class="y2k-swal-btn cancel">${textoCancelar}</button>
+                        <button type="button" class="y2k-swal-btn confirm ${peligro ? 'danger' : ''}">${textoConfirmar}</button>
+                    </div>
+                </div>
+            `;
+
+            const cerrar = (resultado) => {
+                overlay.remove();
+                resolve(resultado);
+            };
+
+            overlay.querySelector('.cancel').addEventListener('click', () => cerrar(false));
+            overlay.querySelector('.confirm').addEventListener('click', () => cerrar(true));
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) cerrar(false);
+            });
+
+            document.body.appendChild(overlay);
+        });
+    }
+
+    function mostrarPromptY2K({
+        titulo = 'Guardar Outfit',
+        texto = 'Escribe un nombre o etiqueta para este outfit:',
+        placeholder = 'Ej. Casual Otoño, Oficina...',
+        valorInicial = '',
+        icono = '💖',
+        textoConfirmar = 'Guardar',
+        textoCancelar = 'Cancelar'
+    }) {
+        return new Promise((resolve) => {
+            const overlay = document.createElement('div');
+            overlay.className = 'y2k-swal-overlay';
+
+            overlay.innerHTML = `
+                <div class="y2k-swal-box">
+                    <span class="y2k-swal-icon">${icono}</span>
+                    <h4 class="y2k-swal-title">${titulo}</h4>
+                    <p class="y2k-swal-text">${texto}</p>
+                    <input type="text" class="y2k-swal-input" placeholder="${placeholder}" value="${valorInicial}">
+                    <div class="y2k-swal-actions">
+                        <button type="button" class="y2k-swal-btn cancel">${textoCancelar}</button>
+                        <button type="button" class="y2k-swal-btn confirm">${textoConfirmar}</button>
+                    </div>
+                </div>
+            `;
+
+            const input = overlay.querySelector('.y2k-swal-input');
+            const cerrar = (valor) => {
+                overlay.remove();
+                resolve(valor);
+            };
+
+            overlay.querySelector('.cancel').addEventListener('click', () => cerrar(null));
+            overlay.querySelector('.confirm').addEventListener('click', () => cerrar(input.value));
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') cerrar(input.value);
+                if (e.key === 'Escape') cerrar(null);
+            });
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) cerrar(null);
+            });
+
+            document.body.appendChild(overlay);
+            input.focus();
+        });
     }
 
     function showNotification(message, type = 'success') {

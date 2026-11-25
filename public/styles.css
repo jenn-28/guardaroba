@@ -1641,3 +1641,125 @@ h1 {
     }
 }
 
+
+/* =========================================================
+   MODALES TIPO SWEETALERT Y2K / RETRO-OS
+   ========================================================= */
+
+.y2k-swal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 26, 26, 0.65);
+    backdrop-filter: blur(4px);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    animation: fadeInOverlay 0.2s ease;
+}
+
+.y2k-swal-box {
+    background: #ffe8f0;
+    border: 3px solid #fdefb6;
+    border-radius: 18px;
+    box-shadow: -5px 5px 0px #fd649c, 5px -5px 0px #ffeda5;
+    width: 100%;
+    max-width: 390px;
+    padding: 24px 20px;
+    text-align: center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    animation: popInModal 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.y2k-swal-icon {
+    font-size: 2.6rem;
+    margin-bottom: 8px;
+    display: block;
+    filter: drop-shadow(2px 2px 0px #ff8ce4);
+}
+
+.y2k-swal-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #d81b60;
+    margin-bottom: 8px;
+}
+
+.y2k-swal-text {
+    font-size: 0.92rem;
+    color: #4a154b;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 18px;
+}
+
+.y2k-swal-input {
+    width: 100%;
+    padding: 10px 14px;
+    background: #ffffff;
+    border: 2px solid #ff4292;
+    border-radius: 12px;
+    color: #4a154b;
+    font-size: 0.95rem;
+    font-weight: 600;
+    outline: none;
+    margin-bottom: 18px;
+    box-shadow: 3px 3px 0px #ffe5ec;
+}
+
+.y2k-swal-input:focus {
+    border-color: #f8f66c;
+    box-shadow: 0 0 0 3px rgba(255, 239, 68, 0.7), 3px 3px 0px #ff4292;
+}
+
+.y2k-swal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.y2k-swal-btn {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 25px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 0.88rem;
+    cursor: pointer;
+    border: 2px solid #ffffff;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.y2k-swal-btn:hover {
+    transform: translate(-1px, -1px);
+}
+
+.y2k-swal-btn.confirm {
+    background: linear-gradient(135deg, #f774aa 0%, #d81b60 100%);
+    color: #ffffff;
+    box-shadow: 3px 3px 0px #ff8ce4;
+}
+
+.y2k-swal-btn.confirm.danger {
+    background: linear-gradient(135deg, #ff5252 0%, #c62828 100%);
+    box-shadow: 3px 3px 0px #4a154b;
+}
+
+.y2k-swal-btn.cancel {
+    background: #ffffff;
+    color: #ad1457;
+    border: 2px solid #ff4292;
+    box-shadow: 3px 3px 0px #f8bbd0;
+}
+
+@keyframes fadeInOverlay {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes popInModal {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
